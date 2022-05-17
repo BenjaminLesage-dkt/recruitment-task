@@ -2,13 +2,32 @@
   <div class="controller">
     <div class="buttons-box">
       <div class="previous-btn"></div>
-      <div class="pause-btn"></div>
+      <div
+        class="play-pause-btn"
+        :class="{ play: !play, pause: play }"
+        @click="handlePlayPause()"
+      ></div>
       <div class="next-btn"></div>
     </div>
-    <div class="audio-player">
-      <span id="current-time" class="time">0:00</span>
-      <input type="range" id="seek-slider" max="100" value="0" />
-      <span id="duration" class="time">0:00</span>
+    <div class="audio-player" ref="audioPlayer">
+      <audio
+        src="song-example.mp3"
+        preload="metadata"
+        ref="audio"
+        @timeupdate="handleAudioTimeUpdate()"
+      ></audio>
+      <span id="current-time" class="time">{{
+        secToMMSS(seekSliderValue)
+      }}</span>
+      <input
+        type="range"
+        id="seek-slider"
+        :max="duration.toString()"
+        v-model="seekSliderValue"
+        step="0.001"
+        @input="handleSeekSliderChange()"
+      />
+      <span id="duration" class="time">{{ secToMMSS(duration) }}</span>
     </div>
   </div>
 </template>
@@ -18,6 +37,58 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ControllerComponent",
+  data() {
+    return {
+      duration: 0,
+      audio: document.createElement("audio"),
+      seekSliderValue: 0,
+      play: false,
+    };
+  },
+  mounted() {
+    this.audio = this.$refs.audio as HTMLAudioElement;
+    this.setDuration();
+  },
+  methods: {
+    setDuration() {
+      this.audio.addEventListener("loadedmetadata", () => {
+        this.duration = Math.floor(this.audio.duration);
+      });
+    },
+    secToMMSS(secs: number) {
+      const minutes = Math.floor(secs / 60);
+      const seconds = Math.floor(secs % 60);
+      const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+      return `${minutes}:${returnedSeconds}`;
+    },
+    handlePlayPause() {
+      if (!this.play) {
+        this.audio.play();
+        // playAnimation.playSegments([14, 27], true);
+        this.play = true;
+      } else {
+        this.audio.pause();
+        // playAnimation.playSegments([0, 14], true);
+        this.play = false;
+      }
+    },
+    handleAudioTimeUpdate() {
+      this.seekSliderValue = this.audio.currentTime;
+
+      (this.$refs.audioPlayer as HTMLDivElement).style.setProperty(
+        "--seek-before-width",
+        `${(this.seekSliderValue / this.duration) * 100}%`
+      );
+    },
+    handleSeekSliderChange() {
+      this.audio.currentTime = this.seekSliderValue;
+
+      (this.$refs.audioPlayer as HTMLDivElement).style.setProperty(
+        "--seek-before-width",
+        `${(this.seekSliderValue / this.duration) * 100}%`
+      );
+    },
+  },
 });
 </script>
 
@@ -47,11 +118,19 @@ export default defineComponent({
       mask: url(../assets/previous.svg) no-repeat center;
     }
 
-    .pause-btn {
-      -webkit-mask: url(../assets/pause.svg) no-repeat center;
-      mask: url(../assets/pause.svg) no-repeat center;
+    .play-pause-btn {
       width: 12px;
       height: 21px;
+
+      &.pause {
+        -webkit-mask: url(../assets/pause.svg) no-repeat center;
+        mask: url(../assets/pause.svg) no-repeat center;
+      }
+
+      &.play {
+        -webkit-mask: url(../assets/play.svg) no-repeat center;
+        mask: url(../assets/play.svg) no-repeat center;
+      }
     }
 
     .next-btn {
@@ -95,7 +174,7 @@ export default defineComponent({
         content: "";
         top: 4px;
         left: 0;
-        // width: var(--seek-before-width);
+        width: var(--seek-before-width);
         height: 3px;
         background-color: #8c965d;
         mix-blend-mode: difference;
