@@ -1,13 +1,13 @@
 <template>
   <div class="music-infos">
     <img
-      :src="`/covers/${song.cover}`"
-      :alt="`${song.artist}'s ${song.title} music cover.`"
+      :src="`/covers/${songs[currentSong].cover}`"
+      :alt="`${songs[currentSong].artist}'s ${songs[currentSong].title} music cover.`"
       class="cover"
     />
     <div class="credits">
-      <h1 class="title">{{ song.title }}</h1>
-      <h3 class="artist">{{ song.artist }}</h3>
+      <h1 class="title">{{ songs[currentSong].title }}</h1>
+      <h3 class="artist">{{ songs[currentSong].artist }}</h3>
     </div>
   </div>
 </template>
@@ -24,10 +24,12 @@ interface Song {
 
 export default defineComponent({
   name: "MusicInfos",
-  props: {
-    song: {
-      type: Object as PropType<Song>,
-      required: true,
+  computed: {
+    currentSong() {
+      return this.$store.state.currentSong;
+    },
+    songs() {
+      return this.$store.state.songs;
     },
   },
 });

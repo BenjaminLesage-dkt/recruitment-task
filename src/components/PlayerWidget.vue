@@ -7,7 +7,7 @@
         }"
         class="background"
       ></div>
-      <music-infos :song="songs[currentSong]" />
+      <music-infos />
       <controller-component />
     </div>
     <playlist-component />
@@ -20,14 +20,6 @@ import PlaylistComponentVue from "@/components/PlaylistComponent.vue";
 import MusicInfosVue from "@/components/MusicInfos.vue";
 import ControllerComponentVue from "@/components/ControllerComponent.vue";
 
-interface Songs {
-  [song: string]: {
-    title: string;
-    artist: string;
-    cover: string;
-  };
-}
-
 export default defineComponent({
   name: "PlayerWidget",
   components: {
@@ -35,37 +27,13 @@ export default defineComponent({
     MusicInfos: MusicInfosVue,
     ControllerComponent: ControllerComponentVue,
   },
-  data() {
-    return {
-      currentSong: "sunsetLover",
-      songs: {
-        blame: {
-          title: "Blame",
-          artist: "Kyle",
-          cover: "blame.jfif",
-        },
-        oneStepAtATime: {
-          title: "One Step At A Time",
-          artist: "Bearson",
-          cover: "one-step-at-a-time.jfif",
-        },
-        sunsetLover: {
-          title: "Sunset Lover",
-          artist: "Petit Biscuit",
-          cover: "sunset-lover.jpg",
-        },
-        youth: {
-          title: "Youth",
-          artist: "Troye Sivan",
-          cover: "youth.jpg",
-        },
-        workingGirl: {
-          title: "Working Girl",
-          artist: "Little Boots",
-          cover: "working-girl.jpg",
-        },
-      } as Songs,
-    };
+  computed: {
+    currentSong() {
+      return this.$store.state.currentSong;
+    },
+    songs() {
+      return this.$store.state.songs;
+    },
   },
 });
 </script>
