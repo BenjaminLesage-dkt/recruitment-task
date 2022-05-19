@@ -17,7 +17,7 @@
     </div>
     <div class="audio-player" ref="audioPlayer">
       <audio
-        src="song-example.mp3"
+        :src="getAudioSrc()"
         preload="metadata"
         ref="audio"
         @timeupdate="handleAudioTimeUpdate()"
@@ -61,6 +61,11 @@ export default defineComponent({
     },
   },
   methods: {
+    getAudioSrc() {
+      if (this.currentSong == 2) {
+        return "kislaw.mp3";
+      } else return "listen-the-voice.wav";
+    },
     setDuration() {
       this.audio.addEventListener("loadedmetadata", () => {
         this.duration = Math.floor(this.audio.duration);

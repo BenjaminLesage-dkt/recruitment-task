@@ -31,9 +31,6 @@ export default defineComponent({
   },
   methods: {
     getArtists,
-    changeCurrentSong(songIndex: number) {
-      this.$store.commit("CHANGE_CURRENT_SONG", songIndex);
-    },
   },
 });
 </script>
