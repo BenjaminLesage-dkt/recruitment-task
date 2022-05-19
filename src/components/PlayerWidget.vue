@@ -11,7 +11,7 @@
       ></div>
       <music-infos />
       <controller-component
-        @previousOrNextTrack="(songIndex: number) => {changeCurrentSong(songIndex)}"
+        @changeTrack="(songIndex: number) => {changeCurrentSong(songIndex)}"
       />
     </div>
     <playlist-component

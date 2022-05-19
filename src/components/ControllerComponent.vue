@@ -1,19 +1,13 @@
 <template>
   <div class="controller">
     <div class="buttons-box">
-      <div
-        class="previous-btn"
-        @click="$emit('previousOrNextTrack', currentSong - 1)"
-      ></div>
+      <div class="previous-btn" @click="previousBtnClicked()"></div>
       <div
         class="play-pause-btn"
         :class="{ play: !play, pause: play }"
         @click="handlePlayPause()"
       ></div>
-      <div
-        class="next-btn"
-        @click="$emit('previousOrNextTrack', currentSong + 1)"
-      ></div>
+      <div class="next-btn" @click="changeTrack(currentSong + 1)"></div>
     </div>
     <div class="audio-player" ref="audioPlayer">
       <audio
@@ -21,6 +15,7 @@
         preload="metadata"
         ref="audio"
         @timeupdate="handleAudioTimeUpdate()"
+        @ended="changeTrack(currentSong + 1)"
       ></audio>
       <span id="current-time" class="time">{{
         secToMMSS(seekSliderValue)
@@ -101,6 +96,34 @@ export default defineComponent({
         "--seek-before-width",
         `${(this.seekSliderValue / this.duration) * 100}%`
       );
+    },
+    changeTrack(songIndex: number) {
+      this.$emit("changeTrack", songIndex);
+    },
+    previousBtnClicked() {
+      this.audio.currentTime < 2
+        ? this.changeTrack(this.currentSong - 1)
+        : (this.audio.currentTime = 0);
+    },
+  },
+  watch: {
+    currentSong(newValue, oldValue) {
+      const playPromise = this.audio.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            this.audio.currentTime = 0;
+            this.audio.play();
+            this.play = true;
+          })
+          .catch(() => {
+            this.audio.addEventListener("canplay", () => {
+              this.audio.play();
+              this.play = true;
+            });
+          });
+      }
     },
   },
 });
