@@ -4,7 +4,7 @@
       v-for="(song, index) in playlist"
       :key="index"
       class="song-container"
-      @click="changeCurrentSong(index)"
+      @click="$emit('changeTrack', index)"
     >
       <img :src="song.track.album.images[0].url" alt="" />
       <div class="credits">

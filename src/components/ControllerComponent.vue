@@ -1,13 +1,19 @@
 <template>
   <div class="controller">
     <div class="buttons-box">
-      <div class="previous-btn"></div>
+      <div
+        class="previous-btn"
+        @click="$emit('previousOrNextTrack', currentSong - 1)"
+      ></div>
       <div
         class="play-pause-btn"
         :class="{ play: !play, pause: play }"
         @click="handlePlayPause()"
       ></div>
-      <div class="next-btn"></div>
+      <div
+        class="next-btn"
+        @click="$emit('previousOrNextTrack', currentSong + 1)"
+      ></div>
     </div>
     <div class="audio-player" ref="audioPlayer">
       <audio
@@ -49,6 +55,11 @@ export default defineComponent({
     this.audio = this.$refs.audio as HTMLAudioElement;
     this.setDuration();
   },
+  computed: {
+    currentSong() {
+      return this.$store.state.currentSong;
+    },
+  },
   methods: {
     setDuration() {
       this.audio.addEventListener("loadedmetadata", () => {
@@ -64,11 +75,9 @@ export default defineComponent({
     handlePlayPause() {
       if (!this.play) {
         this.audio.play();
-        // playAnimation.playSegments([14, 27], true);
         this.play = true;
       } else {
         this.audio.pause();
-        // playAnimation.playSegments([0, 14], true);
         this.play = false;
       }
     },

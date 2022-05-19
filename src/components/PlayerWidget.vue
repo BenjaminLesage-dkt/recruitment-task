@@ -10,9 +10,13 @@
         class="background"
       ></div>
       <music-infos />
-      <controller-component />
+      <controller-component
+        @previousOrNextTrack="(songIndex: number) => {changeCurrentSong(songIndex)}"
+      />
     </div>
-    <playlist-component />
+    <playlist-component
+      @changeTrack="(songIndex: number) => {changeCurrentSong(songIndex)}"
+    />
   </div>
 </template>
 
@@ -24,6 +28,7 @@ import ControllerComponentVue from "@/components/ControllerComponent.vue";
 import axios from "axios";
 import * as buffer from "buffer";
 (window as any).Buffer = buffer.Buffer;
+import { CLIENT_ID, CLIENT_SECRET } from "@/APIKeys";
 
 export default defineComponent({
   name: "PlayerWidget",
@@ -44,11 +49,12 @@ export default defineComponent({
     this.callSpotifyAPI();
   },
   methods: {
+    changeCurrentSong(songIndex: number) {
+      if (songIndex >= 0 && songIndex < this.playlist.length)
+        this.$store.commit("CHANGE_CURRENT_SONG", songIndex);
+    },
     callSpotifyAPI() {
       let playlistId = "5CI2ry6oVNL7f6TapUBAok";
-
-      const CLIENT_ID = "XXX";
-      const CLIENT_SECRET = "XXX";
 
       axios("https://accounts.spotify.com/api/token", {
         method: "POST",
