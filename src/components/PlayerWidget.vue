@@ -3,7 +3,9 @@
     <div class="widget-header">
       <div
         :style="{
-          backgroundImage: `url('/covers/${songs[currentSong].cover}')`,
+          backgroundImage: playlist[currentSong]
+            ? `url('${playlist[currentSong].track.album.images[0].url}')`
+            : 'none',
         }"
         class="background"
       ></div>
@@ -19,6 +21,9 @@ import { defineComponent } from "vue";
 import PlaylistComponentVue from "@/components/PlaylistComponent.vue";
 import MusicInfosVue from "@/components/MusicInfos.vue";
 import ControllerComponentVue from "@/components/ControllerComponent.vue";
+import axios from "axios";
+import * as buffer from "buffer";
+(window as any).Buffer = buffer.Buffer;
 
 export default defineComponent({
   name: "PlayerWidget",
@@ -31,8 +36,45 @@ export default defineComponent({
     currentSong() {
       return this.$store.state.currentSong;
     },
-    songs() {
-      return this.$store.state.songs;
+    playlist() {
+      return this.$store.state.playlist;
+    },
+  },
+  mounted() {
+    this.callSpotifyAPI();
+  },
+  methods: {
+    callSpotifyAPI() {
+      let playlistId = "5CI2ry6oVNL7f6TapUBAok";
+
+      const CLIENT_ID = "XXX";
+      const CLIENT_SECRET = "XXX";
+
+      axios("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization:
+            "Basic " +
+            Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString("base64"),
+        },
+        data: "grant_type=client_credentials",
+      })
+        .then((tokenResponse) => {
+          axios(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "aplication/json",
+              Authorization: "Bearer " + tokenResponse.data.access_token,
+            },
+          })
+            .then((playlistResponse) => {
+              this.$store.commit("SET_PLAYLIST", playlistResponse.data.items);
+            })
+            .catch((error) => console.log(error));
+        })
+        .catch((error) => console.log(error));
     },
   },
 });

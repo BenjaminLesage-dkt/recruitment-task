@@ -1,14 +1,15 @@
 <template>
   <div class="playlist">
     <div
-      v-for="(song, key, index) in songs"
+      v-for="(song, index) in playlist"
       :key="index"
       class="song-container"
+      @click="changeCurrentSong(index)"
     >
-      <img :src="`./covers/${song.cover}`" alt="" />
+      <img :src="song.track.album.images[0].url" alt="" />
       <div class="credits">
-        <h4 class="title">{{ song.title }}</h4>
-        <h6 class="artist">{{ song.artist }}</h6>
+        <h4 class="title">{{ song.track.name }}</h4>
+        <h6 class="artist">{{ getArtists(index) }}</h6>
       </div>
     </div>
   </div>
@@ -16,12 +17,22 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import getArtists from "../utils/GetArtists";
 
 export default defineComponent({
   name: "PlaylistComponent",
   computed: {
-    songs() {
-      return this.$store.state.songs;
+    currentSong() {
+      return this.$store.state.currentSong;
+    },
+    playlist() {
+      return this.$store.state.playlist;
+    },
+  },
+  methods: {
+    getArtists,
+    changeCurrentSong(songIndex: number) {
+      this.$store.commit("CHANGE_CURRENT_SONG", songIndex);
     },
   },
 });

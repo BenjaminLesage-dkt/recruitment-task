@@ -1,26 +1,24 @@
 <template>
   <div class="music-infos">
     <img
-      :src="`/covers/${songs[currentSong].cover}`"
-      :alt="`${songs[currentSong].artist}'s ${songs[currentSong].title} music cover.`"
+      :src="
+        playlist[currentSong]
+          ? `${playlist[currentSong].track.album.images[0].url}`
+          : ''
+      "
+      :alt="`${''} music cover.`"
       class="cover"
     />
     <div class="credits">
-      <h1 class="title">{{ songs[currentSong].title }}</h1>
-      <h3 class="artist">{{ songs[currentSong].artist }}</h3>
+      <h1 class="title">{{ playlist[currentSong]?.track.name }}</h1>
+      <h3 class="artist">{{ getArtists(currentSong) }}</h3>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-
-interface Song {
-  [key: string]: string;
-  title: string;
-  artist: string;
-  cover: string;
-}
+import { defineComponent } from "vue";
+import getArtists from "../utils/GetArtists";
 
 export default defineComponent({
   name: "MusicInfos",
@@ -28,9 +26,12 @@ export default defineComponent({
     currentSong() {
       return this.$store.state.currentSong;
     },
-    songs() {
-      return this.$store.state.songs;
+    playlist() {
+      return this.$store.state.playlist;
     },
+  },
+  methods: {
+    getArtists,
   },
 });
 </script>
