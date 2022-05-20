@@ -6,16 +6,28 @@
       class="song-container"
       @click="$emit('changeTrack', index)"
     >
-      <img :src="song.track.album.images[0].url" alt="" />
+      <img
+        :src="song.track.album.images[0].url"
+        alt="Music cover"
+        class="cover"
+      />
       <div class="credits">
-        <h4 class="title">{{ song.track.name }}</h4>
+        <h4 class="title">
+          {{ song.track.name
+          }}<img
+            v-if="index == currentSong"
+            src="../assets/icons/speaker.svg"
+            alt="Speaker icon"
+            class="speaker-icon"
+          />
+        </h4>
         <h6 class="artist">{{ getArtists(index) }}</h6>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" scoped>
 import { defineComponent } from "vue";
 import getArtists from "../utils/GetArtists";
 
@@ -80,7 +92,7 @@ export default defineComponent({
       background-color: #eeeeee;
     }
 
-    img {
+    .cover {
       width: 39px;
       height: 39px;
       border-radius: 50%;
@@ -101,6 +113,15 @@ export default defineComponent({
         margin: 0;
         font-weight: normal;
       }
+    }
+
+    .speaker-icon {
+      width: 13px;
+      height: auto;
+      filter: invert(85%) sepia(0%) saturate(1%) hue-rotate(36deg)
+        brightness(93%) contrast(91%);
+      position: absolute;
+      margin-left: 8px;
     }
   }
 }

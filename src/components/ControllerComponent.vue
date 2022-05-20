@@ -151,8 +151,8 @@ export default defineComponent({
     }
 
     .previous-btn {
-      -webkit-mask: url(../assets/previous.svg) no-repeat center;
-      mask: url(../assets/previous.svg) no-repeat center;
+      -webkit-mask: url(../assets/icons/previous.svg) no-repeat center;
+      mask: url(../assets/icons/previous.svg) no-repeat center;
     }
 
     .play-pause-btn {
@@ -160,19 +160,19 @@ export default defineComponent({
       height: 21px;
 
       &.pause {
-        -webkit-mask: url(../assets/pause.svg) no-repeat center;
-        mask: url(../assets/pause.svg) no-repeat center;
+        -webkit-mask: url(../assets/icons/pause.svg) no-repeat center;
+        mask: url(../assets/icons/pause.svg) no-repeat center;
       }
 
       &.play {
-        -webkit-mask: url(../assets/play.svg) no-repeat center;
-        mask: url(../assets/play.svg) no-repeat center;
+        -webkit-mask: url(../assets/icons/play.svg) no-repeat center;
+        mask: url(../assets/icons/play.svg) no-repeat center;
       }
     }
 
     .next-btn {
-      -webkit-mask: url(../assets/next.svg) no-repeat center;
-      mask: url(../assets/next.svg) no-repeat center;
+      -webkit-mask: url(../assets/icons/next.svg) no-repeat center;
+      mask: url(../assets/icons/next.svg) no-repeat center;
     }
   }
 
