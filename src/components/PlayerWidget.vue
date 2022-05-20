@@ -28,7 +28,6 @@ import ControllerComponentVue from "@/components/ControllerComponent.vue";
 import axios from "axios";
 import * as buffer from "buffer";
 (window as any).Buffer = buffer.Buffer;
-import { CLIENT_ID, CLIENT_SECRET } from "@/APIKeys";
 
 export default defineComponent({
   name: "PlayerWidget",
@@ -62,7 +61,11 @@ export default defineComponent({
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization:
             "Basic " +
-            Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString("base64"),
+            Buffer.from(
+              process.env.VUE_APP_CLIENT_ID +
+                ":" +
+                process.env.VUE_APP_CLIENT_SECRET
+            ).toString("base64"),
         },
         data: "grant_type=client_credentials",
       })
