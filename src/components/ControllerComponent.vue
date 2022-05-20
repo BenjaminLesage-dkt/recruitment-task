@@ -49,6 +49,7 @@ export default defineComponent({
   mounted() {
     this.audio = this.$refs.audio as HTMLAudioElement;
     this.setDuration();
+    window.addEventListener("keydown", (e) => this.handleKeyPress(e));
   },
   computed: {
     currentSong() {
@@ -105,8 +106,18 @@ export default defineComponent({
         ? this.changeTrack(this.currentSong - 1)
         : (this.audio.currentTime = 0);
     },
+    handleKeyPress(e: KeyboardEvent) {
+      (e.code == "Space" || e.code == "ArrowLeft" || e.code == "ArrowRight") &&
+        e.preventDefault();
+      e.code == "Space" && (this.play = !this.play);
+      e.code == "ArrowLeft" && this.previousBtnClicked();
+      e.code == "ArrowRight" && this.changeTrack(this.currentSong + 1);
+    },
   },
   watch: {
+    play() {
+      this.play ? this.audio.play() : this.audio.pause();
+    },
     currentSong() {
       const playPromise = this.audio.play();
 
