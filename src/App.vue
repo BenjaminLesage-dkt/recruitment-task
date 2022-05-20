@@ -30,13 +30,18 @@ export default defineComponent({
   font-style: normal;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
+  height: 100%;
 }
 
 #app {
   background-color: #faf5fe;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   font-family: "SFUIText", Arial, Helvetica, sans-serif;
 }
