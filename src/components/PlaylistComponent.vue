@@ -53,6 +53,7 @@ export default defineComponent({
   height: 52%;
   box-sizing: border-box;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 
   &::-webkit-scrollbar {
     display: block;

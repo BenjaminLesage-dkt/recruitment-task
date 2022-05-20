@@ -131,13 +131,14 @@ export default defineComponent({
   .player-widget {
     width: calc(100% - 78px);
     height: calc(100% - 78px);
+    overflow: hidden;
 
     .widget-header {
-      height: auto;
+      height: 316px;
     }
 
     .playlist {
-      height: auto;
+      height: calc(100% - 316px);
     }
   }
 }
