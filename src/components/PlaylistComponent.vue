@@ -57,6 +57,13 @@ export default defineComponent({
     background-color: #dddddd;
     border: 4px solid transparent;
     background-clip: padding-box;
+
+    &:hover {
+      background-color: #b3b3b3;
+    }
+    &:active {
+      background-color: #8b8b8b;
+    }
   }
 
   .song-container {

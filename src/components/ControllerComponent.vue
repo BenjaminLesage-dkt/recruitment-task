@@ -107,7 +107,7 @@ export default defineComponent({
     },
   },
   watch: {
-    currentSong(newValue, oldValue) {
+    currentSong() {
       const playPromise = this.audio.play();
 
       if (playPromise !== undefined) {

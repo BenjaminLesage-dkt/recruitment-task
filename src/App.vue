@@ -15,6 +15,21 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@font-face {
+  font-family: "SFUIText";
+  src: local("SFUIText"),
+    url(./assets/fonts/SFUIText/SFUIText-Regular.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SFUIText";
+  src: local("SFUIText"),
+    url(./assets/fonts/SFUIText/SFUIText-Bold.woff) format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
 body {
   margin: 0;
 }
@@ -23,6 +38,6 @@ body {
   background-color: #faf5fe;
   height: 100vh;
   width: 100vw;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "SFUIText", Arial, Helvetica, sans-serif;
 }
 </style>

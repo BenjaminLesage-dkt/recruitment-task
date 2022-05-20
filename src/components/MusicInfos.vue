@@ -1,14 +1,24 @@
 <template>
   <div class="music-infos">
-    <img
-      :src="
-        playlist[currentSong]
-          ? `${playlist[currentSong].track.album.images[0].url}`
-          : ''
-      "
-      :alt="`${''} music cover.`"
-      class="cover"
-    />
+    <div class="cover-container">
+      <img
+        :src="
+          playlist[currentSong]
+            ? `${playlist[currentSong].track.album.images[0].url}`
+            : ''
+        "
+        :alt="`Music cover.`"
+        class="cover"
+      />
+      <img
+        :src="
+          playlist[currentSong]
+            ? `${playlist[currentSong].track.album.images[0].url}`
+            : ''
+        "
+        class="cover-shadow"
+      />
+    </div>
     <div class="credits">
       <h1 class="title">{{ playlist[currentSong]?.track.name }}</h1>
       <h3 class="artist">{{ getArtists(currentSong) }}</h3>
@@ -37,11 +47,30 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.cover {
+.cover-container {
   height: 132px;
   width: 132px;
-  border-radius: 4px;
   display: inline-block;
+  position: relative;
+  .cover {
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .cover-shadow {
+    position: absolute;
+    top: 17px;
+    left: 0;
+    z-index: 1;
+    border-radius: 4px;
+    height: 100%;
+    widows: 100%;
+    opacity: 0.7;
+    filter: blur(30px);
+  }
 }
 
 .credits {
@@ -63,6 +92,7 @@ export default defineComponent({
     font-size: 12px;
     color: #a0a588;
     mix-blend-mode: difference;
+    font-weight: normal;
   }
 }
 </style>

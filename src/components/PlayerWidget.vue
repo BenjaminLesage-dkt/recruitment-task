@@ -97,7 +97,7 @@ export default defineComponent({
   transform: translateX(-50%) translateY(-50%);
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 0 40px 30px rgba(204, 204, 204, 0.2);
+  box-shadow: 0 0 40px 30px rgba(204, 204, 204, 0.4);
   overflow: hidden;
 
   .widget-header {
