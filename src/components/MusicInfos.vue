@@ -86,6 +86,7 @@ export default defineComponent({
     margin-bottom: 13px;
     color: #a0a588;
     mix-blend-mode: difference;
+    max-width: 248px;
   }
   .artist {
     margin: 0;
@@ -93,6 +94,27 @@ export default defineComponent({
     color: #a0a588;
     mix-blend-mode: difference;
     font-weight: normal;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .music-infos {
+    text-align: center;
+  }
+  .credits {
+    display: block;
+    margin-left: 0;
+    margin-top: 15px;
+
+    .title {
+      font-size: 14px;
+      margin-bottom: 8px;
+      max-width: none;
+    }
+
+    .artist {
+      font-size: 10px;
+    }
   }
 }
 </style>

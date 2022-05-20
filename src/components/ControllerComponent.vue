@@ -146,6 +146,7 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   margin-top: 28px;
+  flex-wrap: wrap;
 
   .buttons-box {
     width: 132px;
@@ -188,7 +189,7 @@ export default defineComponent({
   }
 
   .audio-player {
-    width: 250px;
+    min-width: 250px;
     display: flex;
     justify-content: space-between;
     margin: auto 0;
@@ -281,6 +282,18 @@ export default defineComponent({
       &:active::-moz-range-thumb {
         transform: scale(1.2);
       }
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .controller {
+    justify-content: center;
+    margin-top: 20px;
+
+    .audio-player {
+      width: 100%;
+      margin-top: 20px;
     }
   }
 }

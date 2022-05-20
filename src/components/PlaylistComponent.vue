@@ -104,6 +104,16 @@ export default defineComponent({
         color: #8d8d8d;
         margin: 0;
         font-weight: normal;
+        position: relative;
+
+        .speaker-icon {
+          width: 13px;
+          height: auto;
+          filter: invert(85%) sepia(0%) saturate(1%) hue-rotate(36deg)
+            brightness(93%) contrast(91%);
+          position: absolute;
+          margin-left: 8px;
+        }
       }
 
       .artist {
@@ -113,15 +123,6 @@ export default defineComponent({
         margin: 0;
         font-weight: normal;
       }
-    }
-
-    .speaker-icon {
-      width: 13px;
-      height: auto;
-      filter: invert(85%) sepia(0%) saturate(1%) hue-rotate(36deg)
-        brightness(93%) contrast(91%);
-      position: absolute;
-      margin-left: 8px;
     }
   }
 }

@@ -86,7 +86,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .player-widget {
   width: 472px;
   height: 505px;
@@ -121,6 +121,29 @@ export default defineComponent({
       z-index: -1;
       transform: scale(1.1);
     }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .player-widget {
+    width: calc(100% - 78px);
+    height: calc(100% - 78px);
+
+    .widget-header {
+      height: auto;
+    }
+
+    .playlist {
+      height: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .player-widget {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
   }
 }
 </style>
